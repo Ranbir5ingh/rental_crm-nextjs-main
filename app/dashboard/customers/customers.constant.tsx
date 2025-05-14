@@ -1,15 +1,9 @@
+"use client";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-<<<<<<< HEAD
-import { Button } from "@/components/ui/button";
-import { Edit, Eye, Mail, Phone, User, UserRoundPen } from "lucide-react";
-
-import { CreateCustomerForm } from "./partials/create-cutomer-form";
-import { CreateCustomerDto } from "./customer.schema";
-=======
 import { Eye, Mail, Phone, User, UserRoundPen } from "lucide-react";
 import  CreateCustomerForm  from "./partials/create-cutomer-form";
->>>>>>> parent of 3b560b4 (Revert "performance update")
 import {
   Dialog,
   DialogContent,
@@ -20,15 +14,64 @@ import { updateCustomer } from "./customer.api";
 import { useAxios } from "@/services/axios/axios.hook";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import Link from "next/link";
 import { ViewEmployeeDialog } from "./partials/view-customer-dialog";
 
-export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
+// Define interfaces for the data types
+interface Customer {
+  id: string;
+  full_name: string;
+  profile?: string; // This is a string URL in the table data
+  phone: string;
+  email: string;
+  date_of_birth: string;
+  address: string;
+  gender: string;
+  status: 'ACTIVE' | 'INACTIVE' | 'BLACKLISTED';
+  [key: string]: any; // For any additional properties
+}
+
+// Define the expected update parameter type to match the updateCustomer function
+interface CustomerUpdateParams {
+  full_name?: string;
+  profile?: File; // This is expected to be a File object for updates
+  phone?: string;
+  email?: string;
+  date_of_birth?: string;
+  address?: string;
+  gender?: string;
+  status?: 'ACTIVE' | 'INACTIVE' | 'BLACKLISTED';
+  [key: string]: any;
+}
+
+interface Vehicle {
+  brand: string;
+  vehicle_number: string;
+  model: string;
+}
+
+interface Rental {
+  id: string;
+  title: string;
+  vehicles: Vehicle;
+  startDate: string;
+  endDate: string;
+  totalAmount: string;
+  advance: string;
+  status: 'CREATED' | 'COMPLETED' | 'INPROGRESS' | 'CANCELLED';
+}
+
+export const CustomerDataCol = (refetch: () => void): ColumnDef<Customer>[] => {
   return [
     {
       header: "S/N",
       accessorFn: (_, index) => index + 1,
       size: 4,
+      // Make this column hidden on mobile
+      cell: ({ row }) => {
+        return (
+          <div className="hidden md:block">{row.index + 1}</div>
+        );
+      },
     },
     {
       accessorKey: "name",
@@ -37,8 +80,6 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
         return (
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
-              {" "}
-              {/* 👈 smaller avatar */}
               {row.original.profile ? (
                 <AvatarImage
                   src={row.original.profile}
@@ -51,7 +92,9 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
               )}
             </Avatar>
             <div className="text-sm">
-              <div className="font-medium">{row.original.full_name}</div>
+              <div className="font-medium truncate max-w-[120px] md:max-w-full">
+                {row.original.full_name}
+              </div>
             </div>
           </div>
         );
@@ -63,13 +106,17 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
       cell: ({ row }) => {
         return (
           <div className="space-y-1 items-center">
-            <div className="flex items-center text-sm">
-              <Phone className="mr-2 h-3 w-3" />
-              {row.original.phone}
+            <div className="flex items-center text-xs md:text-sm">
+              <Phone className="mr-1 h-3 w-3" />
+              <span className="truncate max-w-[100px] md:max-w-full">
+                {row.original.phone}
+              </span>
             </div>
-            <div className="flex items-center text-sm">
-              <Mail className="mr-2 h-3 w-3" />
-              {row.original.email}
+            <div className="flex items-center text-xs md:text-sm">
+              <Mail className="mr-1 h-3 w-3" />
+              <span className="truncate max-w-[100px] md:max-w-full">
+                {row.original.email}
+              </span>
             </div>
           </div>
         );
@@ -78,12 +125,11 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
     {
       accessorKey: "dob",
       header: "DOB",
+      // Hide this column on mobile
       cell: ({ row }) => {
         return (
-          <div className="space-y-1">
-            <div className="flex items-center text-sm">
-              {row.original.date_of_birth}
-            </div>
+          <div className="hidden md:block text-sm">
+            {row.original.date_of_birth}
           </div>
         );
       },
@@ -91,11 +137,13 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
     {
       accessorKey: "address",
       header: "Address",
+      // Hide this column on mobile
       cell: ({ row }) => {
         return (
-          <div>
-            <div className="font-medium"> {row.original.address}</div>
-            <div className="text-sm text-muted-foreground"></div>
+          <div className="hidden md:block">
+            <div className="text-sm truncate max-w-[150px] lg:max-w-[200px]"> 
+              {row.original.address}
+            </div>
           </div>
         );
       },
@@ -103,10 +151,11 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
     {
       accessorKey: "gender",
       header: "Gender",
+      // Hide this column on mobile
       cell: ({ row }) => {
         return (
-          <div>
-            <div className="font-medium"> {row.original.gender}</div>
+          <div className="hidden md:block">
+            <div className="font-medium text-sm">{row.original.gender}</div>
           </div>
         );
       },
@@ -115,15 +164,17 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => {
+        const statusClasses = {
+          ACTIVE: "text-green-500",
+          INACTIVE: "text-gray-500",
+          BLACKLISTED: "text-red-500",
+        };
+        
         return (
           <div>
             <div
-              className={`font-bold ${
-                row.original.status == "ACTIVE"
-                  ? "text-green-500"
-                  : row.original.status == "UNACTIVE"
-                  ? "text-gray-500"
-                  : "text-red-500"
+              className={`font-bold text-xs md:text-sm ${
+                statusClasses[row.original.status] || "text-gray-500"
               }`}
             >
               {row.original.status}
@@ -134,49 +185,50 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
     },
     {
       header: "Actions",
-      accessorFn: (row) => row,
+      id: "actions",
       cell: ({ row }) => {
         const { axios } = useAxios();
-        const [updateDialog, setupdateDialog] = useState(false);
-        async function handleEditCustomers(data: CreateCustomerDto) {
+        const [updateDialog, setUpdateDialog] = useState(false);
+        
+        async function handleEditCustomers(data: CustomerUpdateParams) {
           try {
             const res = await updateCustomer(axios, data, row.original.id);
             if (res) toast.success("Customer Updated Successfully");
           } catch (error: any) {
-            toast.error(error?.message + "something went wrong");
+            toast.error(((error?.message || "") + " something went wrong"));
           } finally {
-            setupdateDialog(false);
-            refect();
+            setUpdateDialog(false);
+            refetch();
           }
         }
+        
         return (
-          <div className="flex gap-3 justify-center  ">
+          <div className="flex gap-2 justify-center">
             <Dialog>
               <DialogTrigger className="flex items-center p-1.5 text-black bg-white rounded-sm">
-                <Eye className=" h-4 w-4" />
+                <Eye className="h-4 w-4" />
               </DialogTrigger>
-              <DialogContent className="w-full min-w-[70vw] bg-white text-black">
+              <DialogContent className="w-[95vw] max-w-md md:max-w-4xl h-[90vh] overflow-y-hidden bg-white text-black">
                 <DialogTitle className="hidden"></DialogTitle>
                 <ViewEmployeeDialog customerId={row.original.id} />
               </DialogContent>
             </Dialog>
+            
             <Dialog
               modal={false}
               open={updateDialog}
-              onOpenChange={setupdateDialog}
+              onOpenChange={setUpdateDialog}
             >
               <DialogTrigger
                 asChild
                 className="flex items-center p-1.5 bg-gray-200 text-black rounded-sm"
               >
-                <UserRoundPen
-                  className="h-8 w-8"
-                  onClick={() => setupdateDialog(true)}
-                />
+                <div onClick={() => setUpdateDialog(true)}>
+                  <UserRoundPen className="h-4 w-4" />
+                </div>
               </DialogTrigger>
-              <DialogContent className="w-full min-w-[70vw] bg-white text-black">
+              <DialogContent className="w-[95vw] max-w-md md:max-w-4xl h-[90vh] overflow-y-auto bg-white text-black">
                 <DialogTitle className="hidden"></DialogTitle>
-
                 <CreateCustomerForm
                   title="Update Customer"
                   submitLabel="Update"
@@ -193,12 +245,18 @@ export const CustomerDataCol = (refect: any): ColumnDef<any>[] => {
   ];
 };
 
-export const CustomerRentalsCol = (refect: any): ColumnDef<any>[] => {
+export const CustomerRentalsCol = (refetch: () => void): ColumnDef<Rental>[] => {
   return [
     {
       header: "S/N",
       accessorFn: (_, index) => index + 1,
       size: 4,
+      // Hide on mobile
+      cell: ({ row }) => {
+        return (
+          <div className="hidden md:block">{row.index + 1}</div>
+        );
+      },
     },
     {
       accessorKey: "title",
@@ -206,7 +264,9 @@ export const CustomerRentalsCol = (refect: any): ColumnDef<any>[] => {
       cell: ({ row }) => {
         return (
           <div className="space-y-1">
-            <div className=" items-center text-sm">{row.original.title}</div>
+            <div className="text-xs md:text-sm truncate max-w-[100px] md:max-w-full">
+              {row.original.title}
+            </div>
           </div>
         );
       },
@@ -217,38 +277,39 @@ export const CustomerRentalsCol = (refect: any): ColumnDef<any>[] => {
       cell: ({ row }) => {
         return (
           <div className="space-y-1 items-center">
-            <div className="flex items-center text-sm">
-              {row.original.vehicles.brand}{" ("}{row.original.vehicles.vehicle_number}{")"}
+            <div className="flex items-center text-xs md:text-sm truncate max-w-[120px] md:max-w-full">
+              {row.original.vehicles.brand} ({row.original.vehicles.vehicle_number})
             </div>
-            <div className="flex items-center text-sm">
+            <div className="flex items-center text-xs md:text-sm truncate max-w-[120px] md:max-w-full">
               {row.original.vehicles.model}
             </div>
           </div>
         );
       },
     },
-
     {
       accessorKey: "duration",
       header: "Duration",
       cell: ({ row }) => {
         return (
           <div className="space-y-1 items-center">
-            <div className=" items-center text-sm">
-              {row.original.startDate} {"-"}
+            <div className="text-xs md:text-sm">
+              {row.original.startDate}
             </div>
-            <div className=" items-center text-sm">{row.original.endDate}</div>
+            <div className="text-xs md:text-sm">
+              {row.original.endDate}
+            </div>
           </div>
         );
       },
     },
     {
-      accessorKey: "total amount",
+      accessorKey: "totalAmount",
       header: "Total Amount",
       cell: ({ row }) => {
         return (
           <div className="space-y-1 text-center">
-            <div className="items-center text-sm">
+            <div className="text-xs md:text-sm">
               {row.original.totalAmount}
             </div>
           </div>
@@ -258,44 +319,45 @@ export const CustomerRentalsCol = (refect: any): ColumnDef<any>[] => {
     {
       accessorKey: "advance",
       header: "Advance",
+      // Hide on mobile
       cell: ({ row }) => {
         return (
-          <div className="space-y-1">
-            <div className=" items-center text-sm">{row.original.advance}</div>
+          <div className="hidden md:block space-y-1">
+            <div className="text-sm">{row.original.advance}</div>
           </div>
         );
       },
     },
     {
-      accessorKey: "Due Amount",
-      header: "due amount",
+      accessorKey: "dueAmount",
+      header: "Due Amount",
       cell: ({ row }) => {
+        const dueAmount = parseInt(row.original.totalAmount) - parseInt(row.original.advance);
         return (
           <div className="space-y-1">
-            <div className=" items-center text-sm">
-              {parseInt(row.original.totalAmount) -
-                parseInt(row.original.advance)}
+            <div className="text-xs md:text-sm">
+              {dueAmount}
             </div>
           </div>
         );
       },
     },
-
     {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => {
+        const statusClasses = {
+          CREATED: "text-orange-500",
+          COMPLETED: "text-green-500",
+          INPROGRESS: "text-blue-600",
+          CANCELLED: "text-red-500"
+        };
+        
         return (
           <div>
             <div
-              className={`font-bold ${
-                row.original.status == "CREATED"
-                  ? "text-orange-500"
-                  : row.original.status == "COMPLETED"
-                  ? "text-green-500"
-                  : row.original.status == "INPROGRESS"
-                  ? "text-blue-600"
-                  : "text-red-500"
+              className={`font-bold text-xs md:text-sm ${
+                statusClasses[row.original.status] || "text-gray-500"
               }`}
             >
               {row.original.status}

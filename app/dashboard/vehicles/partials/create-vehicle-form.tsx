@@ -425,7 +425,7 @@ function CreateVehicleForm({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        <p className="font-bold text-base sm:text-lg">Last Service date</p>
+                        <p className="font-bold text-base sm:text-lg">Last Serviced</p>
                         <FormControl>
                           <Input
                             type="date"
@@ -458,7 +458,7 @@ function CreateVehicleForm({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-bold text-base sm:text-lg">
-                        Upload Car Photo
+                        Car Photo
                       </FormLabel>
 
                       <FormControl>
@@ -504,7 +504,7 @@ function CreateVehicleForm({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-bold text-base sm:text-lg">
-                        Upload Registration Photo
+                        Registration Photo
                       </FormLabel>
 
                       <FormControl>
@@ -571,3 +571,5 @@ function CreateVehicleForm({
     </div>
   );
 }
+
+export default React.memo(CreateVehicleForm);
