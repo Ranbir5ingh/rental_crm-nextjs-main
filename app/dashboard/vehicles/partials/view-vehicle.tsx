@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Calendar, PenToolIcon as Tool, Fuel, Users, Banknote, Gauge } from "lucide-react"
-import Image from "next/image"
+import { Calendar, PenTool, Fuel, Users, Banknote, Gauge } from "lucide-react"
+import { useState } from "react"
 
 // Enum types from your DTO
 export enum VEHICLE_STATUS {
@@ -66,119 +66,145 @@ const getStatusColor = (status?: VEHICLE_STATUS) => {
   }
 }
 
+// Sample vehicle data removed as it's passed as a prop
+
 export function VehicleInfoDisplay({ vehicle }: { vehicle: VehicleInfo }) {
+  const [activeTab, setActiveTab] = useState("images");
+
+
   return (
-    <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-sm">
+    <div className="w-full mx-auto p-3 sm:p-6 bg-white rounded-lg shadow-sm">
       {/* Top Row: Brand, Model, Number and Status */}
-      <div className="mb-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight truncate">
               {vehicle.brand} {vehicle.model}
             </h1>
-            <p className="text-xl font-semibold text-muted-foreground mt-1">{vehicle.vehicle_number}</p>
+            <p className="text-lg sm:text-xl font-semibold text-muted-foreground mt-1">{vehicle.vehicle_number}</p>
           </div>
           {vehicle.vehicle_status && (
-            <Badge className={`${getStatusColor(vehicle.vehicle_status)} text-lg px-4 py-1`}>
+            <Badge className={`${getStatusColor(vehicle.vehicle_status)} text-base sm:text-lg px-3 py-1 mt-2 sm:mt-0`}>
               {vehicle.vehicle_status}
             </Badge>
           )}
         </div>
       </div>
 
-      <Separator className="my-6" />
+      <Separator className="my-4 sm:my-6" />
 
-      {/* Second Row: Vehicle Image and Registration Doc Image */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div className="space-y-2">
-          <h2 className="text-xl font-bold">Vehicle Image</h2>
-          <div className="relative w-full h-64 rounded-lg overflow-hidden border">
-            <Image
-              src={vehicle.vehicle_image || "/placeholder.svg?height=400&width=600"}
-              alt={`${vehicle.brand} ${vehicle.model}`}
-              fill
-              className="object-cover"
-            />
-          </div>
+      {/* Mobile Tab Navigation */}
+      <div className="sm:hidden mb-4">
+        <div className="flex border-b">
+          <button 
+            className={`flex-1 py-2 px-4 text-center ${activeTab === "images" ? "border-b-2 border-primary font-semibold" : ""}`}
+            onClick={() => setActiveTab("images")}
+          >
+            Images
+          </button>
+          <button 
+            className={`flex-1 py-2 px-4 text-center ${activeTab === "info" ? "border-b-2 border-primary font-semibold" : ""}`}
+            onClick={() => setActiveTab("info")}
+          >
+            Vehicle Info
+          </button>
         </div>
+      </div>
 
-        <div className="space-y-2">
-          <h2 className="text-xl font-bold">Registration Document</h2>
-          <div className="relative w-full h-64 rounded-lg overflow-hidden border">
-            <Image
-              src={vehicle.registration_doc || "/placeholder.svg?height=400&width=600"}
-              alt="Registration Document"
-              fill
-              className="object-cover"
-            />
+      {/* Images Section (visible based on tab on mobile) */}
+      <div className={`${activeTab === "images" ? "block" : "hidden"} sm:block mb-4 sm:mb-6`}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <div className="space-y-2">
+            <h2 className="text-lg sm:text-xl font-bold">Vehicle Image</h2>
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden border">
+              <img
+                src={vehicle.vehicle_image}
+                alt={`${vehicle.brand} ${vehicle.model}`}
+                className="object-cover w-full h-full"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h2 className="text-lg sm:text-xl font-bold">Registration Document</h2>
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden border">
+              <img
+                src={vehicle.registration_doc}
+                alt="Registration Document"
+                className="object-cover w-full h-full"
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      <Separator className="my-6" />
+      {activeTab === "images" && <Separator className="my-4 sm:hidden" />}
 
-      {/* Third Row: All Other Information */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Basic Information */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Basic Information</h2>
+      {/* Vehicle Information Section (visible based on tab on mobile) */}
+      <div className={`${activeTab === "info" ? "block" : "hidden"} sm:block`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          {/* Basic Information */}
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="text-xl sm:text-2xl font-bold">Basic Information</h2>
 
-          <div className="grid grid-cols-2 gap-y-4">
-            <p className="text-lg font-bold">Color:</p>
-            <p className="text-lg">{vehicle.color || "N/A"}</p>
+            <div className="grid grid-cols-2 gap-y-3">
+              <p className="text-base sm:text-lg font-bold">Color:</p>
+              <p className="text-base sm:text-lg">{vehicle.color || "N/A"}</p>
 
-            <p className="text-lg font-bold">Year:</p>
-            <p className="text-lg">{vehicle.manufacture_year || "N/A"}</p>
+              <p className="text-base sm:text-lg font-bold">Year:</p>
+              <p className="text-base sm:text-lg">{vehicle.manufacture_year || "N/A"}</p>
 
-            <p className="text-lg font-bold flex items-center gap-2">
-              <Fuel className="h-5 w-5" />
-              Fuel Type:
-            </p>
-            <p className="text-lg">{vehicle.fuel_type || "N/A"}</p>
+              <p className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <Fuel className="h-4 w-4 sm:h-5 sm:w-5" />
+                Fuel Type:
+              </p>
+              <p className="text-base sm:text-lg">{vehicle.fuel_type || "N/A"}</p>
 
-            <p className="text-lg font-bold flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Seating:
-            </p>
-            <p className="text-lg">{vehicle.seating_capacity || "N/A"}</p>
+              <p className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                Seating:
+              </p>
+              <p className="text-base sm:text-lg">{vehicle.seating_capacity || "N/A"}</p>
 
-            <p className="text-lg font-bold flex items-center gap-2">
-              <Gauge className="h-5 w-5" />
-              Mileage:
-            </p>
-            <p className="text-lg">{vehicle.mileage ? `${vehicle.mileage} km/l` : "N/A"}</p>
+              <p className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <Gauge className="h-4 w-4 sm:h-5 sm:w-5" />
+                Mileage:
+              </p>
+              <p className="text-base sm:text-lg">{vehicle.mileage ? `${vehicle.mileage} km/l` : "N/A"}</p>
+            </div>
           </div>
-        </div>
 
-        {/* Rental & Maintenance Information */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Rental & Maintenance</h2>
+          {/* Rental & Maintenance Information */}
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="text-xl sm:text-2xl font-bold">Rental & Maintenance</h2>
 
-          <div className="grid grid-cols-2 gap-y-4">
-            <p className="text-lg font-bold flex items-center gap-2">
-              <Banknote className="h-5 w-5" />
-              Daily Rate:
-            </p>
-            <p className="text-lg">
-              {vehicle.rental_price_per_day ? `₹${vehicle.rental_price_per_day.toLocaleString()}/day` : "N/A"}
-            </p>
+            <div className="grid grid-cols-2 gap-y-3">
+              <p className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <Banknote className="h-4 w-4 sm:h-5 sm:w-5" />
+                Daily Rate:
+              </p>
+              <p className="text-base sm:text-lg">
+                {vehicle.rental_price_per_day ? `₹${vehicle.rental_price_per_day.toLocaleString()}/day` : "N/A"}
+              </p>
 
-            <p className="text-lg font-bold flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Insurance Valid Till:
-            </p>
-            <p className="text-lg">{formatDate(vehicle.insurance_valid_till)}</p>
+              <p className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
+                Insurance:
+              </p>
+              <p className="text-base sm:text-lg">{formatDate(vehicle.insurance_valid_till)}</p>
 
-            <p className="text-lg font-bold flex items-center gap-2">
-              <Tool className="h-5 w-5" />
-              Pollution Valid Till:
-            </p>
-            <p className="text-lg">{formatDate(vehicle.pollution_valid_date)}</p>
-            <p className="text-lg font-bold flex items-center gap-2">
-              <Fuel className="h-5 w-5" />
-              Last Service:
-            </p>
-            <p className="text-lg">{formatDate(vehicle.last_service_date)}</p>
+              <p className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <PenTool className="h-4 w-4 sm:h-5 sm:w-5" />
+                Pollution:
+              </p>
+              <p className="text-base sm:text-lg">{formatDate(vehicle.pollution_valid_date)}</p>
+              
+              <p className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <Fuel className="h-4 w-4 sm:h-5 sm:w-5" />
+                Last Service:
+              </p>
+              <p className="text-base sm:text-lg">{formatDate(vehicle.last_service_date)}</p>
+            </div>
           </div>
         </div>
       </div>

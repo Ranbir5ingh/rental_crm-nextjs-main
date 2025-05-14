@@ -163,7 +163,7 @@ export const VehicleDataCol = (refect: any): ColumnDef<any>[] => {
               <DialogTrigger className="flex items-center p-1.5 text-black bg-gray-200 rounded-sm">
                 <Eye className=" h-4 w-4" />
               </DialogTrigger>
-              <DialogContent className="w-full min-w-[70vw] bg-white text-black">
+              <DialogContent className="w-full max-w-md md:max-w-4xl h-[90vh] overflow-y-auto bg-white text-black">
                 <DialogTitle className="hidden"></DialogTitle>
                 <VehicleInfoDisplay vehicle={row.original} />
               </DialogContent>
@@ -182,7 +182,7 @@ export const VehicleDataCol = (refect: any): ColumnDef<any>[] => {
                   onClick={() => setupdateDialog(true)}
                 />
               </DialogTrigger>
-              <DialogContent className="w-full min-w-[70vw] bg-white text-black">
+              <DialogContent className="w-full max-w-md md:max-w-4xl h-[90vh] overflow-y-auto bg-white text-black">
                 <DialogTitle className="hidden"></DialogTitle>
 
                 <CreateVehicleForm

@@ -1,9 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type React from "react";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Home,
   Users,
@@ -18,8 +19,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-// import { useSupabase } from "@/components/providers/supabase-provider"
-import { useRouter } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -45,6 +44,25 @@ export function DashboardSidebar({ children }: { children: React.ReactNode }) {
   const { toast } = useToast();
   const router = useRouter();
   const { logout } = useSupabase();
+  const [open, setOpen] = useState(true);
+
+  // Track window size to determine if we're on mobile
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 1023);
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Add event listener
+    window.addEventListener("resize", checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
 
   const routes: NavItem[] = [
     { href: "/dashboard", label: "Dashboard", icon: Home },
@@ -72,31 +90,44 @@ export function DashboardSidebar({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const handleNavigation = () => {
+    // Close sidebar on mobile when navigating
+    if (isMobile) {
+      setOpen(false);
+      console.log("hello")
+    }
+  };
+
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex items-center gap-2 px-4 py-2">
-            <Car className="h-6 w-6 text-primary" />
+    <SidebarProvider onOpenChange={setOpen} open={open}>
+      <Sidebar className="border-r">
+        <SidebarHeader className="px-6 py-4 border-b">
+          <div className="flex items-center gap-3">
+            <Car className="h-7 w-7 text-primary" />
             <span className="text-xl font-bold">VehicleCRM</span>
           </div>
         </SidebarHeader>
-        <SidebarContent>
+        <SidebarContent className="px-3 py-4">
           <SidebarMenu>
             {routes.map((route) => (
-              <SidebarMenuItem key={route.href} className="py-2 ">
+              <SidebarMenuItem key={route.href} className="py-1">
                 <SidebarMenuButton
                   asChild
                   isActive={pathname === route.href}
                   tooltip={route.label}
-                  className="bg-transparent"
+                  className={`rounded-lg transition-colors hover:bg-accent ${
+                    pathname === route.href
+                      ? "bg-accent/80 text-accent-foreground"
+                      : "bg-transparent"
+                  }`}
                 >
                   <Link
                     href={route.href}
-                    className="flex items-center gap-2 text-2xl"
+                    className="flex items-center gap-3 px-4 py-3"
+                    onClick={handleNavigation}
                   >
-                    <route.icon className="mr-2 h-8 w-8" />
-                    <span className="text-lg">{route.label}</span>
+                    <route.icon className="h-5 w-5" />
+                    <span className="font-medium">{route.label}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -104,25 +135,25 @@ export function DashboardSidebar({ children }: { children: React.ReactNode }) {
           </SidebarMenu>
         </SidebarContent>
 
-        <SidebarFooter>
+        <SidebarFooter className="px-3 py-4 border-t mt-auto">
           <SidebarMenu>
-            <SidebarMenuItem>
+            <SidebarMenuItem className="py-1">
               <SidebarMenuButton asChild>
                 <Button
                   variant="ghost"
-                  className="w-full justify-start"
+                  className="w-full justify-start rounded-lg px-4 py-3 hover:bg-accent"
                   onClick={handleSignOut}
                 >
-                  <LogOut className="mr-2 h-5 w-5" />
-                  <span>Sign out</span>
+                  <LogOut className="mr-3 h-5 w-5" />
+                  <span className="font-medium">Sign out</span>
                 </Button>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
+            <SidebarMenuItem className="py-1">
               <SidebarMenuButton asChild>
-                <div className="flex items-center gap-3 px-3 py-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                    <User className="h-4 w-4" />
+                <div className="flex items-center gap-3 px-4 py-3 rounded-lg">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+                    <User className="h-5 w-5" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">Admin User</span>
@@ -136,15 +167,15 @@ export function DashboardSidebar({ children }: { children: React.ReactNode }) {
           </SidebarMenu>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset className="w-full overflow-hidden">
-        <header className="flex h-14 items-center gap-4 border-b bg-background px-4 lg:h-[60px] lg:px-6">
-          <SidebarTrigger />
-          <div className="flex items-center gap-2 px-4 py-2">
+      <SidebarInset className="w-full overflow-hidden flex flex-col">
+        <header className="flex h-16 items-center gap-4 border-b bg-background px-4 lg:px-6 fixed top-0 z-10 w-full">
+          <SidebarTrigger className="rounded-md hover:bg-accent p-2" />
+          <div className="flex items-center gap-3">
             <Car className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">VehicleCRM</span>
+            <span className="text-lg font-bold">VehicleCRM</span>
           </div>
         </header>
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 overflow-auto">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
