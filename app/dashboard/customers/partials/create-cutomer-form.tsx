@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Loader } from "lucide-react";
@@ -35,7 +36,7 @@ interface AddCustomerDialogBoxProps {
   title: string;
 }
 
-export function CreateCustomerForm({
+function CreateCustomerForm({
   initialData,
   onSubmit,
   submitLabel,
@@ -48,8 +49,24 @@ export function CreateCustomerForm({
   const [aadharFront, setAadharFront] = useState<File | null>(null);
   const [aadharBack, setAadharBack] = useState<File | null>(null);
   const [drivingLic, setDrivingLic] = useState<File | null>(null);
+<<<<<<< HEAD
   const form = useForm<CreateCustomerDto>({
     resolver: zodResolver(CreateCustomerSchema),
+=======
+
+  async function handleSubmit(data: CustomerFormData) {
+    startTransition(async () => {
+      if (profile) data.profile = profile as any;
+      if (aadharFront) data.aadharFront = aadharFront as any;
+      if (aadharBack) data.aadharBack = aadharBack as any;
+      if (drivingLic) data.drivingLic = drivingLic as any;
+
+      await onSubmit(data);
+    });
+  }
+
+  const form = useForm({
+>>>>>>> parent of 3b560b4 (Revert "performance update")
     defaultValues: initialData
       ? {
           ...initialData,
@@ -68,6 +85,7 @@ export function CreateCustomerForm({
     mode: "onChange",
   });
 
+<<<<<<< HEAD
   async function handleSubmit(data: CreateCustomerDto) {
     startTransition(async () => {
       if (profile) data.profile = profile;
@@ -80,17 +98,24 @@ export function CreateCustomerForm({
   }
 
 
+=======
+>>>>>>> parent of 3b560b4 (Revert "performance update")
   return (
     <div className="w-full  mx-auto p-10 bg-white text-black rounded-lg ">
       <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-500 pb-2">
         {title}
       </h2>
       <Form {...form}>
+<<<<<<< HEAD
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
           className="space-y-6"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-11 lg:gap-40">
+=======
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
+>>>>>>> parent of 3b560b4 (Revert "performance update")
             <div className="space-y-4">
               <FormField
                 control={form.control}
@@ -139,9 +164,13 @@ export function CreateCustomerForm({
                 name="full_name"
                 render={({ field }) => (
                   <FormItem>
+<<<<<<< HEAD
                     <FormLabel className="font-bold  text-lg">
                       Full Name
                     </FormLabel>
+=======
+                    <FormLabel className="font-bold text-lg">Full Name</FormLabel>
+>>>>>>> parent of 3b560b4 (Revert "performance update")
                     <FormControl className="relative">
                       <div>
                         <Input
@@ -163,16 +192,16 @@ export function CreateCustomerForm({
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
+<<<<<<< HEAD
                     <FormLabel className="font-semibold  text-lg">
                       Phone Number
                     </FormLabel>
+=======
+                    <FormLabel className="font-semibold text-lg">Phone Number</FormLabel>
+>>>>>>> parent of 3b560b4 (Revert "performance update")
                     <FormControl>
                       <div className="flex gap-2">
-                        <Input
-                          disabled
-                          value="+91"
-                          className="w-16 bg-gray-100"
-                        />
+                        <Input disabled value="+91" className="w-16 bg-gray-100" />
                         <Input
                           {...field}
                           key="phone"
@@ -192,9 +221,13 @@ export function CreateCustomerForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem>
+<<<<<<< HEAD
                     <FormLabel className="font-semibold  text-lg">
                       Email
                     </FormLabel>
+=======
+                    <FormLabel className="font-semibold text-lg">Email</FormLabel>
+>>>>>>> parent of 3b560b4 (Revert "performance update")
                     <FormControl>
                       <div className="flex gap-2">
                         <Input
@@ -236,9 +269,7 @@ export function CreateCustomerForm({
                   name="gender"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-lg">
-                        Gender
-                      </FormLabel>
+                      <FormLabel className="font-bold text-lg">Gender</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -263,9 +294,7 @@ export function CreateCustomerForm({
                   name="status"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-lg">
-                        Status
-                      </FormLabel>
+                      <FormLabel className="font-bold text-lg">Status</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -278,9 +307,7 @@ export function CreateCustomerForm({
                         <SelectContent>
                           <SelectItem value="ACTIVE">Active</SelectItem>
                           <SelectItem value="INACTIVE">Inactive</SelectItem>
-                          <SelectItem value="BLACKLISTED">
-                            Blacklisted
-                          </SelectItem>
+                          <SelectItem value="BLACKLISTED">Blacklisted</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -292,6 +319,7 @@ export function CreateCustomerForm({
                   control={form.control}
                   name="date_of_birth"
                   render={({ field }) => (
+<<<<<<< HEAD
                     <FormItem>
                       <FormLabel>
                         <p className="font-bold text-lg">Date of Birth</p>
@@ -359,6 +387,26 @@ export function CreateCustomerForm({
                           />
                         </FormControl>
                       </FormLabel>
+=======
+                    <FormItem className="sm:col-span-2 md:col-span-1">
+                      <FormLabel className="font-bold text-lg">Date of Birth</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="date"
+                          value={
+                            field.value
+                              ? new Date(field.value).toISOString().split("T")[0]
+                              : minDate.toISOString().split("T")[0]
+                          }
+                          className="bg-gray-100"
+                          onInput={(e) => {
+                            const inputValue = (e.target as HTMLInputElement).value;
+                            const selectedDate = new Date(inputValue);
+                            field.onChange(selectedDate?.toISOString());
+                          }}
+                        />
+                      </FormControl>
+>>>>>>> parent of 3b560b4 (Revert "performance update")
                       <FormMessage />
                     </FormItem>
                   )}
@@ -370,9 +418,13 @@ export function CreateCustomerForm({
                   name="aadharFront"
                   render={({ field }) => (
                     <FormItem>
+<<<<<<< HEAD
                       <FormLabel className="font-bold text-lg">
                         Upload Addhar Front photo
                       </FormLabel>
+=======
+                      <FormLabel className="font-bold text-lg">Upload Aadhar Front photo</FormLabel>
+>>>>>>> parent of 3b560b4 (Revert "performance update")
 
                       <FormControl>
                         <label className=" block h-[180px]">
@@ -381,8 +433,7 @@ export function CreateCustomerForm({
                               <div className="relative w-full  m-auto aspect-video ">
                                 <img
                                   src={
-                                    (aadharFront &&
-                                      URL.createObjectURL(aadharFront)) ??
+                                    (aadharFront && URL.createObjectURL(aadharFront)) ??
                                     initialData?.aadharFront ??
                                     "/placeholder.svg"
                                   }
@@ -416,9 +467,13 @@ export function CreateCustomerForm({
                   name="aadharBack"
                   render={({ field }) => (
                     <FormItem>
+<<<<<<< HEAD
                       <FormLabel className="font-bold text-lg">
                         Upload Addhar Back photo
                       </FormLabel>
+=======
+                      <FormLabel className="font-bold text-lg">Upload Aadhar Back photo</FormLabel>
+>>>>>>> parent of 3b560b4 (Revert "performance update")
 
                       <FormControl>
                         <label className=" block h-[180px]">
@@ -427,8 +482,7 @@ export function CreateCustomerForm({
                               <div className="relative w-full  m-auto aspect-video ">
                                 <img
                                   src={
-                                    (aadharBack &&
-                                      URL.createObjectURL(aadharBack)) ??
+                                    (aadharBack && URL.createObjectURL(aadharBack)) ??
                                     initialData?.aadharBack ??
                                     "/placeholder.svg"
                                   }
@@ -463,9 +517,13 @@ export function CreateCustomerForm({
                 name="drivingLic"
                 render={({ field }) => (
                   <FormItem>
+<<<<<<< HEAD
                     <FormLabel className="font-bold text-lg">
                       Upload driving Licence photo
                     </FormLabel>
+=======
+                    <FormLabel className="font-bold text-lg">Upload Driving License photo</FormLabel>
+>>>>>>> parent of 3b560b4 (Revert "performance update")
 
                     <FormControl>
                       <label className=" block h-[200px]">
@@ -474,8 +532,7 @@ export function CreateCustomerForm({
                             <div className="relative w-full  m-auto aspect-video  ">
                               <img
                                 src={
-                                  (drivingLic &&
-                                    URL.createObjectURL(drivingLic)) ??
+                                  (drivingLic && URL.createObjectURL(drivingLic)) ??
                                   initialData?.drivingLic ??
                                   "/placeholder.svg"
                                 }
@@ -529,3 +586,8 @@ export function CreateCustomerForm({
     </div>
   );
 }
+<<<<<<< HEAD
+=======
+
+export default React.memo(CreateCustomerForm);
+>>>>>>> parent of 3b560b4 (Revert "performance update")

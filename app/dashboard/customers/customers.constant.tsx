@@ -1,10 +1,15 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+<<<<<<< HEAD
 import { Button } from "@/components/ui/button";
 import { Edit, Eye, Mail, Phone, User, UserRoundPen } from "lucide-react";
 
 import { CreateCustomerForm } from "./partials/create-cutomer-form";
 import { CreateCustomerDto } from "./customer.schema";
+=======
+import { Eye, Mail, Phone, User, UserRoundPen } from "lucide-react";
+import  CreateCustomerForm  from "./partials/create-cutomer-form";
+>>>>>>> parent of 3b560b4 (Revert "performance update")
 import {
   Dialog,
   DialogContent,
