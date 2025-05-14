@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import {
   Bar,
   BarChart,
@@ -14,8 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 interface props {
   graphData: graphData[] | null;
 }
-
-function OverviewComponent({ graphData }: props) {
+export function Overview({ graphData }: props) {
   return (
     <Card className="lg:col-span-2">
       <CardHeader>
@@ -60,6 +59,3 @@ function OverviewComponent({ graphData }: props) {
     </Card>
   );
 }
-
-const Overview = React.memo(OverviewComponent);
-export { Overview };

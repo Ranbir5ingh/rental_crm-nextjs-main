@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useCallback } from "react";
 import { DataTable } from "@/components/CommonTable";
 import { RentalsDataCol } from "./rentals.constant";
 import { useRouter } from "next/navigation";
 import { createRentalData, fetchRentalData } from "./rentals.api";
 import { useAxios } from "@/services/axios/axios.hook";
+import { useState } from "react";
 import { CreateRentalForm } from "./partials/create-rental";
 import { CreateRentalDto } from "./rentals.schema";
 import { toast } from "react-toastify";
@@ -12,33 +12,32 @@ import { toast } from "react-toastify";
 export default function Rentals() {
   const router = useRouter();
   const { axios } = useAxios();
-  const [createRentalDialogOpen, setCreateRentalDialogOpen] = useState(false);
+  const [createRentalDialogOPen, setCreateRentalDialogOPen] = useState(false);
 
-  const CreateRentalComponent = useCallback(
-    ({ refetch: refetchRentalData }: { refetch: any }) => {
-      const createRental = async (data: CreateRentalDto) => {
-        try {
-          const res = await createRentalData(axios, data);
-          if (res) toast.success("Rental created Successfully");
-        } catch (error: any) {
-          toast.error("something went wrong " + error.message);
-        } finally {
-          setCreateRentalDialogOpen(false);
-          refetchRentalData();
-        }
-      };
-
-      return (
-        <CreateRentalForm
-          title="Create Rental"
-          submitLabel="Create"
-          onSubmit={createRental}
-        />
-      );
-    },
-    [axios]
-  );
-
+  function CreateRentalComponent({
+    refetch: refectRentalData,
+  }: {
+    refetch: any;
+  }) {
+    async function createRental(data: CreateRentalDto) {
+      try {
+        const res = await createRentalData(axios, data);
+        if (res) toast.success("Rental created Successfully");
+      } catch (error: any) {
+        toast.error("something went wrong" + error.message);
+      } finally {
+        setCreateRentalDialogOPen(false);
+        refectRentalData();
+      }
+    }
+    return (
+      <CreateRentalForm
+        title="Create Rental"
+        submitLabel="Create"
+        onSubmit={createRental}
+      />
+    );
+  }
   return (
     <DataTable
       title="Rentals"
@@ -48,8 +47,8 @@ export default function Rentals() {
       queryKey={["Rentals"]}
       getColumns={RentalsDataCol}
       CreateEntryComponent={CreateRentalComponent}
-      createEntryDialogOpen={createRentalDialogOpen}
-      setCreateEntryDialogOpen={setCreateRentalDialogOpen}
+      createEntryDialogOpen={createRentalDialogOPen}
+      setCreateEntryDialogOpen={setCreateRentalDialogOPen}
     />
   );
 }
