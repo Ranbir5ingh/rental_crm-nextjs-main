@@ -121,10 +121,10 @@ export function DataTable<TData, TValue>({
               onOpenChange={setCreateEntryDialogOpen}
             >
               <DialogTrigger className="bg-gradient-btn font-bold flex items-center w-max bg-slate-900 text-white px-3 py-1.5 rounded-sm">
-                <Plus className="md:mr-1 h-4 w-4" /> <span className="hidden md:block">Create {title}</span>
+                <Plus className="mr-1 h-4 w-4" /> Create {title}
               </DialogTrigger>
               <DialogContent
-                className="w-full max-w-md md:max-w-4xl h-[90vh] bg-white text-black overflow-y-scroll"
+                className={`w-full min-w-[70vw] md:min-w-[80vw] bg-white text-black max-h-[900px] overflow-y-scroll`}
               >
                 <DialogTitle className="hidden" />
                 <CreateEntryComponent
@@ -134,8 +134,8 @@ export function DataTable<TData, TValue>({
               </DialogContent>
             </Dialog>
           )}
-          <Button onClick={() => refetch()} variant="outline" >
-            <RefreshCw className="md:mr-2 h-4 w-4" /> <span className="hidden md:block">Refresh</span> 
+          <Button onClick={() => refetch()} variant="outline">
+            <RefreshCw className="mr-2 h-4 w-4" /> Refresh
           </Button>
         </div>
       </div>

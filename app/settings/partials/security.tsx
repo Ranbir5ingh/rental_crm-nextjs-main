@@ -89,14 +89,14 @@ export function Security() {
             <h3 className="text-lg font-medium">Password Policy</h3>
             <div className="space-y-4">
               {passwordSettings.map((setting, index) => (
-                <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="space-y-1">
+                <div key={index} className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                  <div>
                     <h4 className="font-medium">{setting.title}</h4>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{setting.description}</p>
+                    <p className="text-sm text-muted-foreground">{setting.description}</p>
                   </div>
                   {setting.type === "select" ? (
                     <Select defaultValue={setting.defaultValue}>
-                      <SelectTrigger className="w-full sm:w-[160px] md:w-[180px] mt-1 sm:mt-0">
+                      <SelectTrigger className="w-full md:w-[180px]">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -108,9 +108,7 @@ export function Security() {
                       </SelectContent>
                     </Select>
                   ) : (
-                    <div className="flex justify-end mt-1 sm:mt-0">
-                      <ToggleBtn />
-                    </div>
+                    <ToggleBtn />
                   )}
                 </div>
               ))}
@@ -121,14 +119,14 @@ export function Security() {
             <h3 className="text-lg font-medium">Account Security</h3>
             <div className="space-y-4">
               {accountSettings.map((setting, index) => (
-                <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="space-y-1">
+                <div key={index} className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                  <div>
                     <h4 className="font-medium">{setting.title}</h4>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{setting.description}</p>
+                    <p className="text-sm text-muted-foreground">{setting.description}</p>
                   </div>
                   {setting.type === "select" ? (
                     <Select defaultValue={setting.defaultValue}>
-                      <SelectTrigger className="w-full sm:w-[160px] md:w-[180px] mt-1 sm:mt-0">
+                      <SelectTrigger className="w-full md:w-[180px]">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -140,9 +138,7 @@ export function Security() {
                       </SelectContent>
                     </Select>
                   ) : (
-                    <div className="flex justify-end mt-1 sm:mt-0">
-                      <ToggleBtn />
-                    </div>
+                    <ToggleBtn />
                   )}
                 </div>
               ))}
@@ -153,20 +149,18 @@ export function Security() {
             <h3 className="text-lg font-medium">API Security</h3>
             <div className="space-y-4">
               {apiSettings.map((setting, index) => (
-                <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="space-y-1">
+                <div key={index} className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                  <div>
                     <h4 className="font-medium">{setting.title}</h4>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{setting.description}</p>
+                    <p className="text-sm text-muted-foreground">{setting.description}</p>
                   </div>
-                  <div className="flex justify-end mt-1 sm:mt-0">
-                    <ToggleBtn />
-                  </div>
+                  <ToggleBtn />
                 </div>
               ))}
             </div>
           </div>
 
-          <Button className="w-full sm:w-auto">
+          <Button>
             <Save className="mr-2 h-4 w-4" />
             Save Security Settings
           </Button>
@@ -180,39 +174,33 @@ export function Security() {
         <CardContent className="space-y-6">
           <div className="space-y-4">
             <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="space-y-1">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                <div>
                   <h4 className="font-medium">Data Encryption</h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Enable encryption for sensitive data</p>
+                  <p className="text-sm text-muted-foreground">Enable encryption for sensitive data</p>
                 </div>
-                <div className="flex justify-end mt-1 sm:mt-0">
-                  <ToggleBtn />
-                </div>
+                <ToggleBtn />
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="space-y-1">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                <div>
                   <h4 className="font-medium">Automated Backups</h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Enable automated data backups</p>
+                  <p className="text-sm text-muted-foreground">Enable automated data backups</p>
                 </div>
-                <div className="flex justify-end mt-1 sm:mt-0">
-                  <ToggleBtn />
-                </div>
+                <ToggleBtn />
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="space-y-1">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                <div>
                   <h4 className="font-medium">Data Retention Policy</h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     Automatically delete old data based on retention policy
                   </p>
                 </div>
-                <div className="flex justify-end mt-1 sm:mt-0">
-                  <ToggleBtn />
-                </div>
+                <ToggleBtn />
               </div>
             </div>
           </div>
 
-          <Button className="w-full sm:w-auto">
+          <Button>
             <Save className="mr-2 h-4 w-4" />
             Save Data Protection Settings
           </Button>

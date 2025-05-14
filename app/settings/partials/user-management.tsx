@@ -110,94 +110,90 @@ export function UserManagement() {
   })
 
   return (
-    <div className="space-y-4 sm:space-y-6 max-w-full">
-      <Card className="max-w-full">
-        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="space-y-6">
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>User Management</CardTitle>
-          <Button className="flex items-center gap-2 w-full sm:w-auto">
+          <Button className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
             Add User
           </Button>
         </CardHeader>
-        <CardContent className="px-1 sm:px-6 overflow-hidden">
-          <div className="rounded-md border w-full overflow-x-auto no-scrollbar">
-            <div className="min-w-full inline-block align-middle">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[140px] sm:w-auto whitespace-nowrap">User</TableHead>
-                    <TableHead className="whitespace-nowrap">Role</TableHead>
-                    <TableHead className="whitespace-nowrap">Status</TableHead>
-                    <TableHead className="hidden sm:table-cell whitespace-nowrap">Last Login</TableHead>
-                    <TableHead className="text-right whitespace-nowrap">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {users.map((user, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="p-2 sm:p-4">
-                        <div className="flex items-center gap-2 sm:gap-3">
-                          <Avatar className="hidden sm:flex h-6 w-6 sm:h-8 sm:w-8">
-                            <AvatarFallback className="bg-primary/10 text-xs">{user.name.substring(0, 2)}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-medium text-sm sm:text-base">{user.name}</div>
-                            <div className="text-xs text-muted-foreground">{user.email}</div>
-                          </div>
+        <CardContent>
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>User</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Last Login</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {users.map((user, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <Avatar>
+                          <AvatarFallback className="bg-primary/10">{user.name.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-medium">{user.name}</div>
+                          <div className="text-sm text-muted-foreground">{user.email}</div>
                         </div>
-                      </TableCell>
-                      <TableCell className="p-2 sm:p-4 whitespace-nowrap text-xs sm:text-sm">{user.role}</TableCell>
-                      <TableCell className="p-2 sm:p-4 whitespace-nowrap">
-                        <Badge variant={user.status === "active" ? "default" : "secondary"} className="text-xs">{user.status}</Badge>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell p-2 sm:p-4 whitespace-nowrap text-xs sm:text-sm">{user.lastLogin}</TableCell>
-                      <TableCell className="p-2 sm:p-4 text-right whitespace-nowrap">
-                        <Button variant="ghost" size="icon" className="h-7 w-7">
-                          <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive">
-                          <Trash className="h-3 w-3 sm:h-4 sm:w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>{user.role}</TableCell>
+                    <TableCell>
+                      <Badge variant={user.status === "active" ? "default" : "secondary"}>{user.status}</Badge>
+                    </TableCell>
+                    <TableCell>{user.lastLogin}</TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="ghost" size="icon">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="text-destructive">
+                        <Trash className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="max-w-full">
+      <Card>
         <CardHeader>
           <CardTitle>Role Permissions</CardTitle>
         </CardHeader>
-        <CardContent className="px-1 sm:px-6 overflow-hidden">
-          <div className="rounded-md border w-full overflow-x-auto no-scrollbar">
-            <div className="min-w-full inline-block align-middle">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="p-2 sm:p-4 whitespace-nowrap">Module</TableHead>
-                    <TableHead className="p-2 sm:p-4 whitespace-nowrap">Admin</TableHead>
-                    <TableHead className="p-2 sm:p-4 whitespace-nowrap">Manager</TableHead>
-                    <TableHead className="p-2 sm:p-4 whitespace-nowrap">Employee</TableHead>
+        <CardContent>
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Module</TableHead>
+                  <TableHead>Admin</TableHead>
+                  <TableHead>Manager</TableHead>
+                  <TableHead>Employee</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {permissions.map((permission, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{permission.module}</TableCell>
+                    <TableCell>{permission.admin}</TableCell>
+                    <TableCell>{permission.manager}</TableCell>
+                    <TableCell>{permission.employee}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {permissions.map((permission, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="p-2 sm:p-4 whitespace-nowrap text-xs sm:text-sm">{permission.module}</TableCell>
-                      <TableCell className="p-2 sm:p-4 whitespace-nowrap text-xs sm:text-sm">{permission.admin}</TableCell>
-                      <TableCell className="p-2 sm:p-4 whitespace-nowrap text-xs sm:text-sm">{permission.manager}</TableCell>
-                      <TableCell className="p-2 sm:p-4 whitespace-nowrap text-xs sm:text-sm">{permission.employee}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                ))}
+              </TableBody>
+            </Table>
           </div>
-          <Button className="mt-4 w-full sm:w-auto">
+          <Button className="mt-4">
             <Save className="mr-2 h-4 w-4" />
             Save Permissions
           </Button>

@@ -183,7 +183,7 @@ export function CreateRentalForm({
   }, [openCustomer, openVehicle]);
 
   return (
-    <div className="w-full mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8 md:py-10 bg-white text-black rounded-lg">
+    <div className="w-full  mx-auto p-10 bg-white text-black rounded-lg ">
       <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-500 pb-2">
         {title}
       </h2>
@@ -193,7 +193,7 @@ export function CreateRentalForm({
           onSubmit={form.handleSubmit(handleSubmit, onError)}
           className="space-y-6"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-11 lg:gap-40">
             <div className="space-y-4">
               <Dialog
                 modal={false}
@@ -205,17 +205,17 @@ export function CreateRentalForm({
                   onClick={() => setAddCustomerDialogOpen(true)}
                 >
                   {false ? (
-                    <Card className="rounded-lg shadow-md overflow-hidden h-20">
+                    <Card className=" rounded-lg shadow-md overflow-hidden h-20">
                       <Skeleton className="w-full h-full" />
                     </Card>
                   ) : (
-                    <Card className="rounded-lg shadow-md overflow-hidden">
-                      <div className="flex items-center justify-between w-full h-full pl-3 sm:pl-4">
-                        <div className="font-semibold text-lg sm:text-xl md:text-2xl h-full truncate">
+                    <Card className=" rounded-lg shadow-md overflow-hidden">
+                      <div className="flex  items-center  justify-between  w-full    h-full pl-4">
+                        <div className="font-semibold text-2xl  h-full">
                           {openCustomer ? (
-                            <p className="flex flex-col justify-between gap-2 sm:gap-3 md:gap-4 h-full py-2">
-                              <span className="truncate">{openCustomer.full_name}</span>
-                              <span className="font-medium text-sm sm:text-base md:text-lg truncate">
+                            <p className="flex flex-col justify-between gap-4  h-full  ">
+                              <span>{openCustomer.full_name}</span>
+                              <span className="font-medium text-lg ">
                                 {openCustomer.phone}
                               </span>
                             </p>
@@ -224,10 +224,10 @@ export function CreateRentalForm({
                           )}
                         </div>
 
-                        <div className="p-2 sm:p-3 md:p-4">
-                          <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex justify-center items-center bg-gray-200 rounded-full overflow-hidden">
+                        <div className="p-4 ">
+                          <div className="w-15 h-15 flex justify-center items-center  bg-gray-200 rounded-full overflow-hidden ">
                             {openCustomer ? (
-                              <Avatar className="h-full w-full">
+                              <Avatar className="h-20 w-20">
                                 <AvatarImage
                                   src={openCustomer.profile}
                                   alt={openCustomer.full_name}
@@ -237,7 +237,7 @@ export function CreateRentalForm({
                                 </AvatarFallback>
                               </Avatar>
                             ) : (
-                              <UserPlus className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 stroke-1" />
+                              <UserPlus className="w-10 h-10 stroke-1 " />
                             )}
                           </div>
                         </div>
@@ -245,7 +245,7 @@ export function CreateRentalForm({
                     </Card>
                   )}
                 </DialogTrigger>
-                <DialogContent className="w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] max-w-[95vw] bg-white text-black">
+                <DialogContent className="w-full min-w-[60vw] bg-white text-black">
                   <DialogTitle className="hidden"></DialogTitle>
                   <AddCustomerDialogBox
                     onCustomerSubmit={setOpenCustomer}
@@ -268,19 +268,19 @@ export function CreateRentalForm({
                   onClick={() => setAddVehicleDialogOPen(true)}
                 >
                   {false ? (
-                    <Card className="rounded-lg shadow-md overflow-hidden h-20">
+                    <Card className=" rounded-lg shadow-md overflow-hidden h-20">
                       <Skeleton className="w-full h-full" />
                     </Card>
                   ) : (
-                    <Card className="rounded-lg shadow-md overflow-hidden">
-                      <div className="flex items-center justify-between w-full h-full pl-3 sm:pl-4">
-                        <div className="font-semibold text-lg sm:text-xl md:text-2xl h-full truncate">
+                    <Card className=" rounded-lg shadow-md overflow-hidden">
+                      <div className="flex  items-center  justify-between  w-full    h-full pl-4">
+                        <div className="font-semibold text-2xl  h-full">
                           {openVehicle ? (
-                            <p className="flex flex-col justify-between gap-2 sm:gap-3 md:gap-4 h-full py-2">
-                              <span className="truncate">
+                            <p className="flex flex-col justify-between gap-4  h-full  ">
+                              <span>
                                 {openVehicle.brand + "-" + openVehicle.model}
                               </span>
-                              <span className="font-medium text-sm sm:text-base md:text-lg truncate">
+                              <span className="font-medium text-lg ">
                                 {openVehicle.vehicle_number}
                               </span>
                             </p>
@@ -289,10 +289,10 @@ export function CreateRentalForm({
                           )}
                         </div>
 
-                        <div className="p-2 sm:p-3 md:p-4">
-                          <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex justify-center items-center bg-gray-200 rounded-full overflow-hidden">
+                        <div className="p-4 ">
+                          <div className="w-15 h-15 flex justify-center items-center  bg-gray-200 rounded-full overflow-hidden ">
                             {openVehicle ? (
-                              <Avatar className="h-full w-full">
+                              <Avatar className="h-20 w-20">
                                 <AvatarImage
                                   src={openVehicle.vehicle_image}
                                   alt={openVehicle.brand}
@@ -302,7 +302,7 @@ export function CreateRentalForm({
                                 </AvatarFallback>
                               </Avatar>
                             ) : (
-                              <PlusCircle className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 stroke-1" />
+                              <PlusCircle className="w-10 h-10 stroke-1 " />
                             )}
                           </div>
                         </div>
@@ -310,7 +310,7 @@ export function CreateRentalForm({
                     </Card>
                   )}
                 </DialogTrigger>
-                <DialogContent className="w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] max-w-[95vw] bg-white text-black">
+                <DialogContent className="w-full min-w-[60vw] bg-white text-black">
                   <DialogTitle className="hidden"></DialogTitle>
                   <AddCustomerDialogBox
                     onVehicleSubmit={setOpenVehicle}
@@ -329,7 +329,7 @@ export function CreateRentalForm({
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">Title</FormLabel>
+                    <FormLabel className="font-bold  text-lg">Title</FormLabel>
                     <FormControl className="relative">
                       <div>
                         <Input
@@ -350,7 +350,7 @@ export function CreateRentalForm({
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">
+                    <FormLabel className="font-bold text-lg">
                       Description
                     </FormLabel>
                     <FormControl>
@@ -366,15 +366,15 @@ export function CreateRentalForm({
               />
             </div>
 
-            <div className="space-y-4 sm:space-y-5 md:space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4 items-center">
                 <FormField
                   control={form.control}
                   name="startDate"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        <p className="font-bold text-base sm:text-lg">Start Date</p>
+                        <p className="font-bold text-lg">Start Date</p>
                         <FormControl>
                           <Input
                             type="date"
@@ -404,7 +404,7 @@ export function CreateRentalForm({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        <p className="font-bold text-base sm:text-lg">End Date</p>
+                        <p className="font-bold text-lg">End Date</p>
                         <FormControl>
                           <Input
                             type="date"
@@ -434,7 +434,7 @@ export function CreateRentalForm({
                 name="advance"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">
+                    <FormLabel className="font-bold  text-lg">
                       Advance
                     </FormLabel>
                     <FormControl className="relative">
@@ -451,31 +451,31 @@ export function CreateRentalForm({
                   </FormItem>
                 )}
               />
-              <div className="space-y-4 sm:space-y-6 md:space-y-8 mt-4">
+              <div className="space-y-10">
                 <div className="flex justify-between gap-4 items-center">
                   <h2 className="font-bold">Total Amount:</h2>
-                  <p className="font-bold text-lg sm:text-xl">{totalAmount}</p>
+                  <p className="font-bold text-xl">{totalAmount}</p>
                 </div>
                 <div className="flex justify-between gap-4 items-center">
                   <h2 className="font-bold">Due Amount:</h2>
-                  <p className="font-bold text-lg sm:text-xl">{dueAmount}</p>
+                  <p className="font-bold text-xl">{dueAmount}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="flex justify-center mt-6 sm:mt-8 md:mt-10">
+          <div className="flex justify-center">
             <Button
               type="submit"
               onClick={() => form.handleSubmit(onSubmit)}
-              className="w-full sm:w-80 bg-black text-white hover:bg-gray-700 font-bold py-2.5"
+              className="w-80 bg-black text-white hover:bg-gray-700 font-bold"
               disabled={isPending}
             >
               {isPending ? (
-                <div className="flex items-center justify-center space-x-2">
+                <>
                   <Loader className="animate-spin" size={20} />
-                  <span>{submitLabel == "Update" ? "Updating" : "Creating"}</span>
-                </div>
+                  {submitLabel == "Update" ? "Updating" : "Creating"}
+                </>
               ) : (
                 submitLabel
               )}

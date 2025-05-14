@@ -42,12 +42,12 @@ export default function AddCustomerDialogBox({
   isFetching,
 }: AddCustomerDialogBoxProps) {
   return (
-    <div className="w-full h-[70vh] mx-auto p-2 sm:p-4 md:p-6 overflow-hidden">
-      <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
+    <div className="w-full h-[70vh] mx-auto p-6 overflow-hidden">
+      <h2 className="text-2xl font-semibold ">{title}</h2>
       <Separator />
 
-      <div className="mt-4 sm:mt-6 grid grid-rows-[auto_1fr] h-full box-border">
-        <div className="relative mb-4">
+      <div className="mt-6 grid grid-rows-[75px_auto] h-full box-border ">
+        <div className="relative">
           <label className="text-sm mb-2 block">
             {title.includes("Customer")
               ? "Enter Name or Phone Number"
@@ -62,7 +62,7 @@ export default function AddCustomerDialogBox({
             <Search className="w-4 h-4 absolute left-2.5 top-2.5 text-muted-foreground" />
           </div>
         </div>
-        <div className="overflow-y-auto pb-16 sm:pb-20">
+        <div className="overflow-y-auto pb-20">
           {isFetching ? (
             <div className="w-full h-full flex justify-center items-center text-gray-400">
               Loading ...
@@ -70,31 +70,31 @@ export default function AddCustomerDialogBox({
           ) : customerData?.length ? (
             customerData.map((user, index: number) => {
               return (
-                <Card key={index} className="p-3 sm:p-4 md:p-6 mb-3 h-min">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
-                    <div className="flex items-center space-x-3 sm:space-x-4">
-                      <div className="relative h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0">
+                <Card key={index} className="p-10 h-min">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="relative h-12 w-12">
                         <Avatar className="h-full w-full">
                           <AvatarImage src={user?.profile} alt="Profile" />
                           <AvatarFallback>{user.full_name[0]}</AvatarFallback>
                         </Avatar>
                       </div>
-                      <div className="flex-1 space-y-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-medium truncate">{user.full_name}</span>
-                          <Badge variant="secondary" className="font-normal text-xs">
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{user.full_name}</span>
+                          <Badge variant="secondary" className="font-normal">
                             {user.gender}
                           </Badge>
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                          <span className="truncate">{user.phone}</span>
-                          <span className="truncate">Address: {user.address.slice(0, 20)}</span>
+                        <div className="flex gap-4 text-sm text-muted-foreground">
+                          <span>{user.phone}</span>
+                          <span>Address: {user.address.slice(0, 20)}</span>
                         </div>
                       </div>
                     </div>
                     <Button
                       variant="secondary"
-                      className="bg-purple-100 hover:bg-purple-200 text-purple-700 w-full sm:w-auto mt-2 sm:mt-0"
+                      className="bg-purple-100 hover:bg-purple-200 text-purple-700"
                       onClick={() => {
                         onCustomerSubmit && onCustomerSubmit(user);
                         setDialogClose && setDialogClose(false);
@@ -110,10 +110,10 @@ export default function AddCustomerDialogBox({
             vehicleData &&
             vehicleData.map((vehicle, index: number) => {
               return (
-                <Card key={index} className="p-3 sm:p-4 md:p-6 mb-3 h-min">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
-                    <div className="flex items-center space-x-3 sm:space-x-4">
-                      <div className="relative h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0">
+                <Card key={index} className="p-10 h-min">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="relative h-12 w-12">
                         <Avatar className="h-full w-full">
                           <AvatarImage
                             src={vehicle?.vehicle_image}
@@ -122,9 +122,9 @@ export default function AddCustomerDialogBox({
                           <AvatarFallback>{vehicle.brand[0]}</AvatarFallback>
                         </Avatar>
                       </div>
-                      <div className="flex-1 space-y-1 min-w-0">
+                      <div className="flex-1 space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium truncate">
+                          <span className="font-medium">
                             {vehicle.brand +
                               " " +
                               vehicle.model +
@@ -132,9 +132,9 @@ export default function AddCustomerDialogBox({
                               vehicle.color}
                           </span>
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                          <span className="truncate">{vehicle.vehicle_number}</span>
-                          <span className="truncate">
+                        <div className="flex gap-4 text-sm text-muted-foreground">
+                          <span>{vehicle.vehicle_number}</span>
+                          <span>
                             Seating Capacity: {vehicle.seating_capacity}
                           </span>
                         </div>
@@ -142,7 +142,7 @@ export default function AddCustomerDialogBox({
                     </div>
                     <Button
                       variant="secondary"
-                      className="bg-purple-100 hover:bg-purple-200 text-purple-700 w-full sm:w-auto mt-2 sm:mt-0"
+                      className="bg-purple-100 hover:bg-purple-200 text-purple-700"
                       onClick={() => {
                         onVehicleSubmit && onVehicleSubmit(vehicle);
                         setDialogClose && setDialogClose(false);

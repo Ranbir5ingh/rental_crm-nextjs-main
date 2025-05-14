@@ -76,13 +76,13 @@ export function Notifications() {
         <h3 className="text-lg font-medium">Document Expiry Notifications</h3>
         <div className="space-y-4">
           {documentExpirySettings.map((setting, index) => (
-            <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="space-y-1">
+            <div key={index} className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <div>
                 <h4 className="font-medium">{setting.title}</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">{setting.description}</p>
+                <p className="text-sm text-muted-foreground">{setting.description}</p>
               </div>
               <Select defaultValue={setting.defaultValue}>
-                <SelectTrigger className="w-full sm:w-[160px] md:w-[180px] mt-1 sm:mt-0">
+                <SelectTrigger className="w-full md:w-[180px]">
                   <SelectValue placeholder="Select days" />
                 </SelectTrigger>
                 <SelectContent>
@@ -100,14 +100,12 @@ export function Notifications() {
         <h3 className="text-lg font-medium">Rental Notifications</h3>
         <div className="space-y-4">
           {rentalSettings.map((setting, index) => (
-            <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="space-y-1">
+            <div key={index} className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <div>
                 <h4 className="font-medium">{setting.title}</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">{setting.description}</p>
+                <p className="text-sm text-muted-foreground">{setting.description}</p>
               </div>
-              <div className="flex justify-end mt-1 sm:mt-0">
-                <ToggleBtn />
-              </div>
+              <ToggleBtn />
             </div>
           ))}
         </div>
@@ -117,20 +115,18 @@ export function Notifications() {
         <h3 className="text-lg font-medium">System Notifications</h3>
         <div className="space-y-4">
           {systemSettings.map((setting, index) => (
-            <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="space-y-1">
+            <div key={index} className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <div>
                 <h4 className="font-medium">{setting.title}</h4>
-                <p className="text-xs sm:text-sm text-muted-foreground">{setting.description}</p>
+                <p className="text-sm text-muted-foreground">{setting.description}</p>
               </div>
-              <div className="flex justify-end mt-1 sm:mt-0">
-                <ToggleBtn />
-              </div>
+              <ToggleBtn />
             </div>
           ))}
         </div>
       </div>
 
-      <Button className="w-full sm:w-auto mt-6">
+      <Button className="mt-6">
         <Save className="mr-2 h-4 w-4" />
         Save Notification Settings
       </Button>

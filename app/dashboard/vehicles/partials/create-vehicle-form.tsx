@@ -92,24 +92,23 @@ export function CreateVehicleForm({
   };
 
   return (
-    <div className="w-full mx-auto p-4 sm:p-6 md:p-8 lg:p-10 bg-white text-black rounded-lg">
-      <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 border-b-2 border-gray-500 pb-2">
+    <div className="w-full  mx-auto p-10 bg-white text-black rounded-lg ">
+      <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-500 pb-2">
         {title}
       </h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit, onError)}
-          className="space-y-4 sm:space-y-6"
+          className="space-y-6"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-16">
-            {/* Left Column */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-11 lg:gap-40">
             <div className="space-y-4">
               <FormField
                 control={form.control}
                 name="vehicle_number"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">
+                    <FormLabel className="font-bold  text-lg">
                       Vehicle number
                     </FormLabel>
                     <FormControl className="relative">
@@ -132,7 +131,7 @@ export function CreateVehicleForm({
                 name="brand"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">Brand</FormLabel>
+                    <FormLabel className="font-bold text-lg">Brand</FormLabel>
                     <FormControl className="relative">
                       <div>
                         <Input
@@ -152,7 +151,7 @@ export function CreateVehicleForm({
                 name="model"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">Model</FormLabel>
+                    <FormLabel className="font-bold text-lg">Modal</FormLabel>
                     <FormControl className="relative">
                       <div>
                         <Input
@@ -172,7 +171,7 @@ export function CreateVehicleForm({
                 name="manufacture_year"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">
+                    <FormLabel className="font-bold text-lg">
                       Manufacture Year
                     </FormLabel>
                     <FormControl className="relative">
@@ -195,7 +194,7 @@ export function CreateVehicleForm({
                 name="color"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">Color</FormLabel>
+                    <FormLabel className="font-bold text-lg">Color</FormLabel>
                     <FormControl className="relative">
                       <div>
                         <Input
@@ -215,7 +214,7 @@ export function CreateVehicleForm({
                 name="rental_price_per_day"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-base sm:text-lg">
+                    <FormLabel className="font-bold text-lg">
                       Rental Price / day
                     </FormLabel>
                     <FormControl className="relative">
@@ -235,15 +234,14 @@ export function CreateVehicleForm({
               />
             </div>
 
-            {/* Right Column */}
-            <div className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4 items-center">
                 <FormField
                   control={form.control}
                   name="fuel_type"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-base sm:text-lg">
+                      <FormLabel className="font-bold text-lg">
                         Fuel Type
                       </FormLabel>
                       <Select
@@ -277,7 +275,7 @@ export function CreateVehicleForm({
                   name="vehicle_status"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-base sm:text-lg">
+                      <FormLabel className="font-bold text-lg">
                         Vehicle Status
                       </FormLabel>
                       <Select
@@ -306,14 +304,13 @@ export function CreateVehicleForm({
                   )}
                 />
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+              <div className="grid grid-cols-2 gap-4 items-center">
                 <FormField
                   control={form.control}
                   name="seating_capacity"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-base sm:text-lg">
+                      <FormLabel className="font-bold text-lg">
                         Seating Capacity
                       </FormLabel>
                       <FormControl className="relative">
@@ -324,7 +321,6 @@ export function CreateVehicleForm({
                             {...field}
                             className="pl-8 bg-gray-100"
                           />
-                          <User className="w-4 h-4 absolute left-2.5 top-2.5 text-muted-foreground" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -336,7 +332,7 @@ export function CreateVehicleForm({
                   name="mileage"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-base sm:text-lg">
+                      <FormLabel className="font-bold text-lg">
                         Mileage
                       </FormLabel>
                       <FormControl className="relative">
@@ -355,17 +351,15 @@ export function CreateVehicleForm({
                   )}
                 />
               </div>
-
-              {/* Date fields */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-col-1  gap-4 items-center">
                 <FormField
                   control={form.control}
                   name="insurance_valid_till"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        <p className="font-bold text-base sm:text-lg">
-                          Insurance Valid date
+                        <p className="font-bold text-lg">
+                          Insuraance Valid date
                         </p>
                         <FormControl>
                           <Input
@@ -377,7 +371,7 @@ export function CreateVehicleForm({
                                     .split("T")[0]
                                 : insuranceMinDate.toISOString().split("T")[0]
                             }
-                            className="bg-gray-300"
+                            className="bg-gray-300 grid"
                             onInput={(e: any) => {
                               const inputValue = e.target.value;
                               const selectedDate = new Date(inputValue);
@@ -396,7 +390,7 @@ export function CreateVehicleForm({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        <p className="font-bold text-base sm:text-lg">
+                        <p className="font-bold text-lg">
                           Pollution Valid date
                         </p>
                         <FormControl>
@@ -409,7 +403,7 @@ export function CreateVehicleForm({
                                     .split("T")[0]
                                 : insuranceMinDate.toISOString().split("T")[0]
                             }
-                            className="bg-gray-300"
+                            className="bg-gray-300 grid"
                             onInput={(e: any) => {
                               const inputValue = e.target.value;
                               const selectedDate = new Date(inputValue);
@@ -426,9 +420,9 @@ export function CreateVehicleForm({
                   control={form.control}
                   name="last_service_date"
                   render={({ field }) => (
-                    <FormItem className="sm:col-span-2 lg:col-span-1">
+                    <FormItem>
                       <FormLabel>
-                        <p className="font-bold text-base sm:text-lg">Last Service date</p>
+                        <p className="font-bold text-lg">Last Service date</p>
                         <FormControl>
                           <Input
                             type="date"
@@ -439,7 +433,7 @@ export function CreateVehicleForm({
                                     .split("T")[0]
                                 : lastServiceMinDate.toISOString().split("T")[0]
                             }
-                            className="bg-gray-300"
+                            className="bg-gray-300 grid"
                             onInput={(e: any) => {
                               const inputValue = e.target.value;
                               const selectedDate = new Date(inputValue);
@@ -454,22 +448,21 @@ export function CreateVehicleForm({
                 />
               </div>
 
-              {/* Image uploads */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+              <div className="grid grid-cols-2 gap-4 items-center">
                 <FormField
                   control={form.control}
                   name="vehicle_image"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-base sm:text-lg">
+                      <FormLabel className="font-bold text-lg">
                         Upload Car Photo
                       </FormLabel>
 
                       <FormControl>
-                        <label className="block h-32 sm:h-40 md:h-48 lg:h-[180px]">
-                          <div className="border-2 border-dashed w-full rounded-lg text-center cursor-pointer h-full transition-colors flex justify-center items-center">
+                        <label className=" block h-[180px]">
+                          <div className="border-2 border-dashed w-full rounded-lg text-center cursor-pointe h-full aspect-[3/4]  transition-colors flex justify-center items-center">
                             {initialData?.vehicle_image || vehicle_image ? (
-                              <div className="relative w-full h-full">
+                              <div className="relative w-full  m-auto aspect-video ">
                                 <img
                                   src={
                                     (vehicle_image &&
@@ -507,16 +500,16 @@ export function CreateVehicleForm({
                   name="registration_doc"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-base sm:text-lg">
+                      <FormLabel className="font-bold text-lg">
                         Upload Registration Photo
                       </FormLabel>
 
                       <FormControl>
-                        <label className="block h-32 sm:h-40 md:h-48 lg:h-[180px]">
-                          <div className="border-2 border-dashed w-full rounded-lg text-center cursor-pointer h-full transition-colors flex justify-center items-center">
+                        <label className=" block h-[180px]">
+                          <div className="border-2 border-dashed w-full rounded-lg text-center cursor-pointe h-full aspect-[3/4]  transition-colors flex justify-center items-center">
                             {initialData?.registration_doc ||
                             registration_doc ? (
-                              <div className="relative w-full h-full">
+                              <div className="relative w-full  m-auto aspect-video ">
                                 <img
                                   src={
                                     (registration_doc &&
@@ -553,17 +546,17 @@ export function CreateVehicleForm({
             </div>
           </div>
 
-          {/* Submit Button */}
-          <div className="flex justify-center mt-6 sm:mt-8">
+          <div className="flex justify-center">
             <Button
               type="submit"
-              className="w-full sm:w-80 bg-black text-white hover:bg-gray-700 font-bold py-2 px-4"
+              // onClick={() => form.handleSubmit(onSubmit)}
+              className="w-80 bg-black text-white hover:bg-gray-700 font-bold"
               disabled={isPending}
             >
               {isPending ? (
                 <>
-                  <Loader className="mr-2 animate-spin" size={18} />
-                  <span>{submitLabel === "Update" ? "Updating" : "Submitting"}</span>
+                  <Loader className="animate-spin" size={20} />
+                  {submitLabel == "Update" ? "Updating" : "Submitting"}
                 </>
               ) : (
                 submitLabel
