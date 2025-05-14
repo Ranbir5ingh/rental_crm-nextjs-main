@@ -1,15 +1,13 @@
 "use client";
-import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Car, DollarSign, Users } from "lucide-react";
-
+import React from "react";
 interface props {
   revenue?: number | null;
   activeCustomers?: number | null;
   availableVehicles?: number | null;
 }
-
-function StatsCardComponent({
+export default function StatsCard({
   revenue,
   activeCustomers,
   availableVehicles,
@@ -50,6 +48,3 @@ function StatsCardComponent({
     </>
   );
 }
-
-const StatsCard = React.memo(StatsCardComponent);
-export default StatsCard;

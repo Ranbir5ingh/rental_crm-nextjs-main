@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useTransition, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Loader } from "lucide-react";
@@ -30,6 +29,7 @@ import {
   fuelTypeEnum,
   vehicleStatusEnum,
 } from "../vehicle.schema";
+import { useState, useTransition } from "react";
 import FileUploadPlaceholder from "@/components/file-upload-placeholder";
 import Image from "next/image";
 
@@ -40,7 +40,7 @@ interface AddCustomerDialogBoxProps {
   title: string;
 }
 
-function CreateVehicleForm({
+export function CreateVehicleForm({
   initialData,
   onSubmit,
   submitLabel,
@@ -79,20 +79,17 @@ function CreateVehicleForm({
     mode: "onChange",
   });
 
-  const handleSubmit = useCallback(
-    async (data: CreateVehicleDto) => {
-      startTransition(async () => {
-        if (vehicle_image) data.vehicle_image = vehicle_image;
-        if (registration_doc) data.registration_doc = registration_doc;
-        await onSubmit(data);
-      });
-    },
-    [vehicle_image, registration_doc, onSubmit]
-  );
+  async function handleSubmit(data: CreateVehicleDto) {
+    startTransition(async () => {
+      if (vehicle_image) data.vehicle_image = vehicle_image;
+      if (registration_doc) data.registration_doc = registration_doc;
+      await onSubmit(data);
+    });
+  }
 
-  const onError = useCallback((errors: any) => {
+  const onError = (errors: any) => {
     console.log("Validation Errors:", errors);
-  }, []);
+  };
 
   return (
     <div className="w-full mx-auto p-4 sm:p-6 md:p-8 lg:p-10 bg-white text-black rounded-lg">
@@ -431,7 +428,7 @@ function CreateVehicleForm({
                   render={({ field }) => (
                     <FormItem className="sm:col-span-2 lg:col-span-1">
                       <FormLabel>
-                        <p className="font-bold text-base sm:text-lg">Last Serviced</p>
+                        <p className="font-bold text-base sm:text-lg">Last Service date</p>
                         <FormControl>
                           <Input
                             type="date"
@@ -465,7 +462,7 @@ function CreateVehicleForm({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-bold text-base sm:text-lg">
-                        Car Photo
+                        Upload Car Photo
                       </FormLabel>
 
                       <FormControl>
@@ -511,7 +508,7 @@ function CreateVehicleForm({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-bold text-base sm:text-lg">
-                        Registration Photo
+                        Upload Registration Photo
                       </FormLabel>
 
                       <FormControl>
@@ -578,5 +575,3 @@ function CreateVehicleForm({
     </div>
   );
 }
-
-export default React.memo(CreateVehicleForm);

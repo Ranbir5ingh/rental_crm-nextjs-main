@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useForm } from "react-hook-form";
 import { User, Loader } from "lucide-react";
 
@@ -46,7 +45,7 @@ type CreateCustomerFormProps = {
   title: string;
 };
 
-function CreateCustomerForm({
+export function CreateCustomerForm({
   initialData,
   onSubmit,
   submitLabel,
@@ -59,18 +58,7 @@ function CreateCustomerForm({
   const [aadharFront, setAadharFront] = useState<File | null>(null);
   const [aadharBack, setAadharBack] = useState<File | null>(null);
   const [drivingLic, setDrivingLic] = useState<File | null>(null);
-
-  async function handleSubmit(data: CustomerFormData) {
-    startTransition(async () => {
-      if (profile) data.profile = profile as any;
-      if (aadharFront) data.aadharFront = aadharFront as any;
-      if (aadharBack) data.aadharBack = aadharBack as any;
-      if (drivingLic) data.drivingLic = drivingLic as any;
-
-      await onSubmit(data);
-    });
-  }
-
+  
   const form = useForm({
     defaultValues: initialData
       ? {
@@ -90,13 +78,27 @@ function CreateCustomerForm({
     mode: "onChange",
   });
 
+  async function handleSubmit(data: CustomerFormData) {
+    startTransition(async () => {
+      if (profile) data.profile = profile as any;
+      if (aadharFront) data.aadharFront = aadharFront as any;
+      if (aadharBack) data.aadharBack = aadharBack as any;
+      if (drivingLic) data.drivingLic = drivingLic as any;
+
+      await onSubmit(data);
+    });
+  }
+
   return (
     <div className="w-full mx-auto p-4 md:p-6 lg:p-10 bg-white text-black rounded-lg">
       <h2 className="text-xl font-semibold mb-6 border-b-2 border-gray-500 pb-2">
         {title}
       </h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="space-y-6"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
             <div className="space-y-4">
               {/* Profile Photo */}
@@ -150,7 +152,9 @@ function CreateCustomerForm({
                 name="full_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-lg">Full Name</FormLabel>
+                    <FormLabel className="font-bold text-lg">
+                      Full Name
+                    </FormLabel>
                     <FormControl className="relative">
                       <div>
                         <Input
@@ -173,10 +177,16 @@ function CreateCustomerForm({
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-semibold text-lg">Phone Number</FormLabel>
+                    <FormLabel className="font-semibold text-lg">
+                      Phone Number
+                    </FormLabel>
                     <FormControl>
                       <div className="flex gap-2">
-                        <Input disabled value="+91" className="w-16 bg-gray-100" />
+                        <Input
+                          disabled
+                          value="+91"
+                          className="w-16 bg-gray-100"
+                        />
                         <Input
                           {...field}
                           key="phone"
@@ -198,7 +208,9 @@ function CreateCustomerForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-semibold text-lg">Email</FormLabel>
+                    <FormLabel className="font-semibold text-lg">
+                      Email
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -241,7 +253,9 @@ function CreateCustomerForm({
                   name="gender"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-lg">Gender</FormLabel>
+                      <FormLabel className="font-bold text-lg">
+                        Gender
+                      </FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -266,7 +280,9 @@ function CreateCustomerForm({
                   name="status"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-lg">Status</FormLabel>
+                      <FormLabel className="font-bold text-lg">
+                        Status
+                      </FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -279,7 +295,9 @@ function CreateCustomerForm({
                         <SelectContent>
                           <SelectItem value="ACTIVE">Active</SelectItem>
                           <SelectItem value="INACTIVE">Inactive</SelectItem>
-                          <SelectItem value="BLACKLISTED">Blacklisted</SelectItem>
+                          <SelectItem value="BLACKLISTED">
+                            Blacklisted
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -293,13 +311,17 @@ function CreateCustomerForm({
                   name="date_of_birth"
                   render={({ field }) => (
                     <FormItem className="sm:col-span-2 md:col-span-1">
-                      <FormLabel className="font-bold text-lg">Date of Birth</FormLabel>
+                      <FormLabel className="font-bold text-lg">
+                        Date of Birth
+                      </FormLabel>
                       <FormControl>
                         <Input
                           type="date"
                           value={
                             field.value
-                              ? new Date(field.value).toISOString().split("T")[0]
+                              ? new Date(field.value)
+                                  .toISOString()
+                                  .split("T")[0]
                               : minDate.toISOString().split("T")[0]
                           }
                           className="bg-gray-100"
@@ -323,7 +345,9 @@ function CreateCustomerForm({
                   name="aadharFront"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-lg">Upload Aadhar Front photo</FormLabel>
+                      <FormLabel className="font-bold text-lg">
+                        Upload Aadhar Front photo
+                      </FormLabel>
 
                       <FormControl>
                         <label className="block h-[180px]">
@@ -332,7 +356,8 @@ function CreateCustomerForm({
                               <div className="relative w-full h-full m-auto">
                                 <img
                                   src={
-                                    (aadharFront && URL.createObjectURL(aadharFront)) ??
+                                    (aadharFront &&
+                                      URL.createObjectURL(aadharFront)) ??
                                     initialData?.aadharFront ??
                                     "/placeholder.svg"
                                   }
@@ -366,7 +391,9 @@ function CreateCustomerForm({
                   name="aadharBack"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-lg">Upload Aadhar Back photo</FormLabel>
+                      <FormLabel className="font-bold text-lg">
+                        Upload Aadhar Back photo
+                      </FormLabel>
 
                       <FormControl>
                         <label className="block h-[180px]">
@@ -375,7 +402,8 @@ function CreateCustomerForm({
                               <div className="relative w-full h-full m-auto">
                                 <img
                                   src={
-                                    (aadharBack && URL.createObjectURL(aadharBack)) ??
+                                    (aadharBack &&
+                                      URL.createObjectURL(aadharBack)) ??
                                     initialData?.aadharBack ??
                                     "/placeholder.svg"
                                   }
@@ -412,7 +440,9 @@ function CreateCustomerForm({
                 name="drivingLic"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold text-lg">Upload Driving License photo</FormLabel>
+                    <FormLabel className="font-bold text-lg">
+                      Upload Driving License photo
+                    </FormLabel>
 
                     <FormControl>
                       <label className="block h-[200px]">
@@ -421,7 +451,8 @@ function CreateCustomerForm({
                             <div className="relative w-full h-full m-auto">
                               <img
                                 src={
-                                  (drivingLic && URL.createObjectURL(drivingLic)) ??
+                                  (drivingLic &&
+                                    URL.createObjectURL(drivingLic)) ??
                                   initialData?.drivingLic ??
                                   "/placeholder.svg"
                                 }
@@ -474,5 +505,3 @@ function CreateCustomerForm({
     </div>
   );
 }
-
-export default React.memo(CreateCustomerForm);
